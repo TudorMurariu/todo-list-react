@@ -5,13 +5,17 @@ import Card from './components/Card';
 function App() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [id, setId] = useState(0);
   const [list, setList] = useState<Item[]>([]);
-  let id = 0;
 
   function handleAddItem(_ : any) {
     const newItem = { title, text, id };
     setList((list) => [...list, newItem]);
-    id++;
+    setId(id + 1);
+  }
+
+  function hadleRemoveItem(id: number) {
+    setList(list => list.filter(item => item.id !== id));
   }
 
   return(
@@ -22,7 +26,7 @@ function App() {
       <button onClick={handleAddItem}>ADD</button>
       <br/>
       {list.map(item => {
-        return  <Card {...item}/>;
+        return  <Card item={item} func={hadleRemoveItem}/>;
       })}
     </div>
   )
